@@ -1,8 +1,18 @@
 ---
+import fetchApi from '../lib/strapi';
 const { tamagotchi } = Astro.props;
+const tamagotchis = await fetchApi(
+  {
+    endpoint: 'tamagotchis?populate=*',
+    wrappedByKey: 'data',
+  },
+  {}
+);
+// console.log(tamagotchis);
+
 ---
 
-<div class="card">
+<div class="card" data-qualifier={tamagotchi.category}>
   <img src={import.meta.env.PUBLIC_STRAPI_URL + tamagotchi.image.url} class="img-tama" alt={tamagotchi.name} />
   <div class="tama-text">
     <p class="tamagotchi-name">

@@ -1,4 +1,3 @@
-
 :root {
   --s_2: 0.2rem;
   --s_1: 0.5rem;
@@ -14,7 +13,6 @@
 
   --c-bg-color: rgb(45, 91, 140);
   --c-text-color: #f0f0f0;
-
   --border-radius: 0.25rem;
   --border-radius-xl: 1rem;
 
@@ -25,4 +23,11 @@
 body {
   line-height: 1.5;
   font-family: 'beelzebrush-bb', sans-serif;
+}
+
+h2 {
+  font-size: 4rem;
+}
+.hidden {
+  display: none;
 }

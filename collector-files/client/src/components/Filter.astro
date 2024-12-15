@@ -1,0 +1,41 @@
+---
+const { name } = Astro.props;
+import '../styles/global.css';
+---
+
+<script>
+
+  const handleOptionChange = () => {
+
+    const selection = [...document.querySelectorAll('.filteroption:checked')]
+    .map(($input) => $input.value);
+
+    if (selection.length > 0) {
+      document.querySelectorAll('[data-category]').forEach(($li) => $li.classList.add('hidden'));
+
+      selection.forEach((name) => {
+        document.querySelectorAll(`[data-category="${name}"]`).forEach(($li) => $li.classList.remove('hidden'));
+      });
+    } else {
+      document.querySelectorAll('[data-category]').forEach(($li) => $li.classList.remove('hidden'));
+    }
+  };
+  document.addEventListener('astro:page-load', () => {
+    const options = document.querySelectorAll('.filteroption');
+    options.forEach((option) => option.addEventListener('change', handleOptionChange));
+  });
+</script>
+
+<ul class="tama-ul">
+  <li class="brand_filtering">
+    <label>
+      <input class="filteroption-qualifier" type="checkbox" value="{name}" name="brand-filter" />
+      <span class="brand_name">{name}</span>
+    </label>
+  </li>
+</ul>
+<style>
+  .tama-ul {
+    list-style-type: none;
+  }
+</style>

@@ -1,6 +1,13 @@
 ---
 import { Image } from 'astro:assets';
 import myImage from '../images/tamagotchi-color-logo.png';
+import Filter from './Filter.astro';
+import fetchApi from '../lib/strapi';
+const categories = await fetchApi({
+  endpoint: 'categories',
+  wrappedByKey: 'data',
+},{}
+);
 ---
 
 <header>
@@ -9,17 +16,14 @@ import myImage from '../images/tamagotchi-color-logo.png';
 
 <nav>
   <img src={myImage.src} class="nav-img" height="88" alt="" />
-  <ul class="nav-items img-class">
-    <li class="nav-item"><a href="#">Home</a></li>
-    <li class="nav-item"><a href="#">Originals</a></li>
-    <li class="nav-item"><a href="#">Uni</a></li>
-    <li class="nav-item"><a href="#">Connections</a></li>
-  </ul>
+  <li class="nav-items img-class">
+{categories.map((category) => <Filter name={category.title} />)}
+  </li>
 </nav>
-
 <style>
   .nav-items {
     font-family: 'beelzebrush-bb', sans-serif;
+    color: var(--c-text-color);
     margin-left: auto;
   }
   .nav-img {

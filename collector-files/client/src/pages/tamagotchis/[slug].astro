@@ -30,6 +30,18 @@ export async function getStaticPaths() {
 
 const { tama } = Astro.props;
 const category = tama.category ? tama.category.title : 'No Category';
+
+const relatedTamagotchis = await fetchApi({
+  endpoint: `tamagotchis`,
+  query: {
+    populate: ['image'],
+    filters: {
+      category: { id: { $eq: tama.category.id } },
+      id: { $ne: tama.id },
+    },
+  },
+  wrappedByKey: 'data',
+});
 ---
 
 <!doctype html>
@@ -39,7 +51,7 @@ const category = tama.category ? tama.category.title : 'No Category';
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>{tama.title.length}</title>
+    <title>{tama.title}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -52,10 +64,20 @@ const category = tama.category ? tama.category.title : 'No Category';
       <div class="tama-info">
         <p class="tama-description">{tama.description}</p>
         <p class="tama-category">{category}</p>
+        <div class="tama-character">
+          <img src="../images/tama1.png" alt="" />
+        </div>
+      </div>
+    </div>
+    <div class="more-tamas">
+      <h2 class="category-name">more from the <span class="category-style">"{category}"</span> category!</h2>
+      <div class="related-cards">
+        {relatedTamagotchis.map((relatedTama) => <TamagotchisCard key={relatedTama.id} tamagotchi={relatedTama} />)}
       </div>
     </div>
   </body>
 </html>
+
 <style>
   .card-container {
     display: flex;
@@ -67,7 +89,17 @@ const category = tama.category ? tama.category.title : 'No Category';
     font-size: 1.5rem;
     margin: 1rem;
   }
-
+  .tama-info {
+    background-color: rgb(87, 149, 215);
+    color: var(--c-text-color);
+    border-radius: 10px;
+  }
+  .related-cards {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
   .tama-category {
     display: inline-block;
     font-family: 'gigalypse', sans-serif;
@@ -78,7 +110,13 @@ const category = tama.category ? tama.category.title : 'No Category';
     padding: 0.8rem;
     border-radius: 5px;
   }
-  .bg-matte{
+  .category-name {
+    margin-left: 2rem;
+  }
+  .category-style {
+    color: rgb(239, 136, 0);
+  }
+  .bg-matte {
     background-image: url('../');
   }
 </style>
