@@ -1,0 +1,51 @@
+---
+import { Image } from 'astro:assets';
+import myImage from '../images/tamagotchi-color-logo.png';
+import Filter from './Filter.astro';
+import fetchApi from '../lib/strapi';
+const categories = await fetchApi({
+  endpoint: 'categories',
+  wrappedByKey: 'data',
+},{}
+);
+---
+
+<header>
+  <link rel="stylesheet" href="https://use.typekit.net/jxw5osm.css" />
+</header>
+
+<nav>
+  <img src={myImage.src} class="nav-img" height="88" alt="" />
+  <li class="nav-items img-class">
+{categories.map((category) => <Filter name={category.title} />)}
+  </li>
+</nav>
+<style>
+  .nav-items {
+    font-family: 'beelzebrush-bb', sans-serif;
+    color: var(--c-text-color);
+    margin-left: auto;
+  }
+  .nav-img {
+    padding-top: 0.7rem;
+  }
+  .nav-items,
+  li,
+  nav {
+    background-color: var(--c-bg-color);
+    display: flex;
+    flex-direction: row;
+    font-size: 2rem;
+    padding: 0rem 3rem 0rem 3rem;
+  }
+  nav {
+    margin-left: auto;
+  }
+  a {
+    text-decoration: none;
+    color: var(--c-text-color);
+  }
+  .nav-item {
+    padding-left: 0rem;
+  }
+</style>

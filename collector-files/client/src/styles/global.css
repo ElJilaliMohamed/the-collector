@@ -1,0 +1,33 @@
+:root {
+  --s_2: 0.2rem;
+  --s_1: 0.5rem;
+  --s1: 1rem;
+  --s2: 1.2rem;
+  --s3: 1.5rem;
+  --s4: 2rem;
+
+  --fs-s: 0.8rem;
+  --fs-m: 1rem;
+  --fs-l: 1.5rem;
+  --fs-xl: 2rem;
+
+  --c-bg-color: rgb(45, 91, 140);
+  --c-text-color: #f0f0f0;
+  --border-radius: 0.25rem;
+  --border-radius-xl: 1rem;
+
+  --maxContent: 60rem;
+  --defaultShadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+body {
+  line-height: 1.5;
+  font-family: 'beelzebrush-bb', sans-serif;
+}
+
+h2 {
+  font-size: 4rem;
+}
+.hidden {
+  display: none;
+}

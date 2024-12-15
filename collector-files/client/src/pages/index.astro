@@ -1,0 +1,28 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+import fetchApi from '../lib/strapi';
+import TamagotchisCard from '../components/tamagotchisCard.astro';
+
+const tamagotchis = await fetchApi(
+  {
+    endpoint: 'tamagotchis?populate=*',
+    wrappedByKey: 'data',
+  },
+  {}
+);
+---
+
+<Layout>
+  <div class="card-container">
+    {tamagotchis.map((tama) => <TamagotchisCard tamagotchi={tama} />)}
+  </div>
+</Layout>
+
+<style>
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+</style>
