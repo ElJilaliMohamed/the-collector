@@ -15,9 +15,8 @@ export default async function fetchApi({ endpoint, query = undefined, wrappedByK
 
   const url = new URL(`${import.meta.env.PUBLIC_STRAPI_URL}/api/${endpoint}${query ? `?${qs.stringify(query, { encode: false })}` : ``}`);
 
-  console.log('Fetching...', url.toString());
-
   const res = await fetch(url.toString(), options);
+  console.log('Fetching...', url.toString());
   let data = await res.json();
 
   if (wrappedByKey) {
@@ -27,6 +26,5 @@ export default async function fetchApi({ endpoint, query = undefined, wrappedByK
   if (wrappedByList) {
     data = data[0];
   }
-
   return data;
 }

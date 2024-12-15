@@ -1,13 +1,12 @@
 ---
-const { name, image } = Astro.props;
 const { tamagotchi } = Astro.props;
 ---
 
 <div class="card">
-  <img src={import.meta.env.PUBLIC_STRAPI_URL + image} class="img-tama" alt={name} />
+  <img src={import.meta.env.PUBLIC_STRAPI_URL + tamagotchi.image.url} class="img-tama" alt={tamagotchi.name} />
   <div class="tama-text">
     <p class="tamagotchi-name">
-      {name}
+      {tamagotchi.title}
     </p>
     <a href={`/tamagotchis/${tamagotchi.slug}`} title="Learn more" class="info-btn">Read more</a>
   </div>

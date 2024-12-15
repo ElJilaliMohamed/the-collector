@@ -1,9 +1,7 @@
 ---
-import Header from '../components/Header.astro';
 import Layout from '../layouts/Layout.astro';
-import Original from '../components/Original.astro';
-import fetchApi from '../lib/strapi';
 
+import fetchApi from '../lib/strapi';
 import TamagotchisCard from '../components/tamagotchisCard.astro';
 
 const tamagotchis = await fetchApi(
@@ -13,14 +11,11 @@ const tamagotchis = await fetchApi(
   },
   {}
 );
-
-console.log(tamagotchis);
 ---
 
 <Layout>
-  <Original />
   <div class="card-container">
-    {tamagotchis.map((i) => <TamagotchisCard name={i.title} image={i.image.url} />)}
+    {tamagotchis.map((tama) => <TamagotchisCard tamagotchi={tama} />)}
   </div>
 </Layout>
 

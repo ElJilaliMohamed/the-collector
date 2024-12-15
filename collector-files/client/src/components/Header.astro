@@ -1,10 +1,15 @@
+---
+import { Image } from 'astro:assets';
+import myImage from '../images/tamagotchi-color-logo.png';
+---
+
 <header>
   <link rel="stylesheet" href="https://use.typekit.net/jxw5osm.css" />
 </header>
 
 <nav>
-  <img src="src/images/tamagotchi-color-logo.png" class="nav-img" height="88" alt="" />
-  <ul class="nav-items">
+  <img src={myImage.src} class="nav-img" height="88" alt="" />
+  <ul class="nav-items img-class">
     <li class="nav-item"><a href="#">Home</a></li>
     <li class="nav-item"><a href="#">Originals</a></li>
     <li class="nav-item"><a href="#">Uni</a></li>

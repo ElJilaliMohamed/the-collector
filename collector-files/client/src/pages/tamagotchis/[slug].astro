@@ -1,3 +1,84 @@
 ---
-import { getCollection } from 'astro:content';
+import Header from '../../components/Header.astro';
+import fetchApi from '../../lib/strapi';
+import TamagotchisCard from '../../components/tamagotchisCard.astro';
+import '../../styles/global.css';
+
+export async function getStaticPaths() {
+  const tamagotchis = await fetchApi(
+    {
+      endpoint: `tamagotchis`,
+      query: {
+        populate: ['image', 'category'],
+      },
+      wrappedByKey: 'data',
+    },
+    {}
+  );
+
+  const categories = await fetchApi({
+    endpoint: `categories`,
+    wrappedByKey: 'data',
+  });
+
+  const paths = tamagotchis.map((tama) => ({
+    params: { slug: tama.slug },
+    props: { tama },
+  }));
+  return paths;
+}
+
+const { tama } = Astro.props;
+const category = tama.category ? tama.category.title : 'No Category';
 ---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{tama.title.length}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  </head>
+  <body class="bg-matte">
+    <Header />
+    <div class="card-container">
+      <TamagotchisCard tamagotchi={tama} />
+      <div class="tama-info">
+        <p class="tama-description">{tama.description}</p>
+        <p class="tama-category">{category}</p>
+      </div>
+    </div>
+  </body>
+</html>
+<style>
+  .card-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 2rem;
+  }
+  .tama-description {
+    font-size: 1.5rem;
+    margin: 1rem;
+  }
+
+  .tama-category {
+    display: inline-block;
+    font-family: 'gigalypse', sans-serif;
+    background-color: var(--c-bg-color);
+    color: var(--c-text-color);
+    font-size: 1.5rem;
+    margin-left: 1rem;
+    padding: 0.8rem;
+    border-radius: 5px;
+  }
+  .bg-matte{
+    background-image: url('../');
+  }
+</style>
